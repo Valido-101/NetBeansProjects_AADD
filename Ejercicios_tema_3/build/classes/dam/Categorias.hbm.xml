@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-nov-2020 11:58:05 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="dam.Categorias" table="categorias" catalog="prueba_1">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombreCategoria" type="string">
+            <column name="nombre_categoria" length="50" />
+        </property>
+        <set name="productoses" table="productos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="categoria_id" />
+            </key>
+            <one-to-many class="dam.Productos" />
+        </set>
+    </class>
+</hibernate-mapping>
