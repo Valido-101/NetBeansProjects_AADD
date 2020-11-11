@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
  *
  * @author maxus
  */
-public class Ejercicio_2 
+public class Ejercicio_2_y_3 
 {
     public static void main(String[] args)
     {
