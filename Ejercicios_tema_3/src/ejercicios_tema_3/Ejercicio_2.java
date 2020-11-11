@@ -6,7 +6,6 @@
 
 package ejercicios_tema_3;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import singleton.HibernateUtil;
@@ -17,8 +16,8 @@ import org.hibernate.Transaction;
  *
  * @author maxus
  */
-public class MainProducto {
-    
+public class Ejercicio_2 
+{
     public static void main(String[] args)
     {
        //Obtenemos SessionFactory
@@ -27,37 +26,31 @@ public class MainProducto {
        //Obtenemos la Session
        Session session = sessionfactory.openSession();
        
-       //Insertar producto
+       //Obtenemos el objeto de tipo Productos
+       Productos producto = (Productos)session.get(Productos.class, 1);
        
-       //Consulta HQL -> obtener la categoría 1 (Frutas)
-       String consulta = "SELECT c FROM Categorias c WHERE c.id = 1";
+       System.out.println("Producto seleccionado: "+producto.getNombreProducto());
        
-       String nombreProducto = "Melocoton";
+       System.out.println("El precio anterior era "+producto.getPrecio());
        
-       float precio = 1.6F;
-       
-       Query query = session.createQuery(consulta);
-       
-       Categorias categoria = (Categorias) query.uniqueResult();
-       
-       //Comprobamos si la categoría existe:
-       if(categoria != null)
+       //Si existe lo tratamos
+       if(producto!=null)
        {
-           //Creamos un objeto Productos para que persista y usamos el cosntructor de la clase
-           Productos producto = new Productos(categoria, nombreProducto, precio);
+           producto.setPrecio(3.5F);
            
            Transaction transaccion = session.beginTransaction();
            
-           session.save(producto);
+           session.update(producto);
            
            transaccion.commit();
+           
+           System.out.println("El nuevo precio es "+producto.getPrecio());
+           
+           System.out.println("Actualización realizada");
        }
        else
        {
-           System.out.println("La categoría seleccionada no existe.");
+           System.out.println("Producto no encontrado.");
        }
-       
-       session.close();
     }
-    
 }
