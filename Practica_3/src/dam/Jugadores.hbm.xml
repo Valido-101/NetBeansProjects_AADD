@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12-nov-2020 14:19:45 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="dam.Jugadores" table="jugadores" catalog="baloncesto">
+        <id name="codigo" type="int">
+            <column name="codigo" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="equipos" class="dam.Equipos" fetch="select">
+            <column name="nombre_equipo" length="20" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="30" />
+        </property>
+        <property name="procedencia" type="string">
+            <column name="procedencia" length="20" />
+        </property>
+        <property name="altura" type="string">
+            <column name="altura" length="4" />
+        </property>
+        <property name="peso" type="java.lang.Integer">
+            <column name="peso" />
+        </property>
+        <property name="posicion" type="string">
+            <column name="posicion" length="12" />
+        </property>
+        <set name="estadisticases" table="estadisticas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="jugador" not-null="true" />
+            </key>
+            <one-to-many class="dam.Estadisticas" />
+        </set>
+    </class>
+</hibernate-mapping>
