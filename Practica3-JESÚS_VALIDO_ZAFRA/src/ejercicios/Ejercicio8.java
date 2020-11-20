@@ -107,10 +107,13 @@ public class Ejercicio8 {
             
             System.out.println("El equipo del jugador "+jugador_1.getNombre()+" era "+equipo_j1.getNombre()+". Ahora es el equipo "+jugador_1.getEquipos().getNombre()+".");
             System.out.println("El equipo del jugador "+jugador_2.getNombre()+" era "+equipo_j2.getNombre()+". Ahora es el equipo "+jugador_2.getEquipos().getNombre()+".");
-            }
-            else
-            {
-                System.out.println("Error al escribir el nombre de los jugadores.");
-            }
+            
+            session.close();
+            sessionfactory.close();
+        }
+        else
+        {
+            System.out.println("Error al escribir el nombre de los jugadores.");
+        }
     }
 }
