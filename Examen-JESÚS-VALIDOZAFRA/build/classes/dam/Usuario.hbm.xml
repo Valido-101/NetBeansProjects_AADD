@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-nov-2020 13:36:47 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="dam.Usuario" table="usuario" catalog="`jesus-validozafra`">
+        <id name="idempleado" type="string">
+            <column name="idempleado" length="5" />
+            <generator class="foreign">
+                <param name="property">empleado</param>
+            </generator>
+        </id>
+        <one-to-one name="empleado" class="dam.Empleado" constrained="true"></one-to-one>
+        <property name="usuario" type="string">
+            <column name="usuario" length="20" not-null="true" />
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="20" not-null="true" />
+        </property>
+        <property name="estado" type="java.lang.Integer">
+            <column name="estado" />
+        </property>
+    </class>
+</hibernate-mapping>

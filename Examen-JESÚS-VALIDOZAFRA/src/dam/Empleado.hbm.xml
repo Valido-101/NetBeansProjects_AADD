@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-nov-2020 13:36:47 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="dam.Empleado" table="empleado" catalog="`jesus-validozafra`">
+        <id name="idempleado" type="string">
+            <column name="idempleado" length="5" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cargo" class="dam.Cargo" fetch="select">
+            <column name="idcargo" length="3" />
+        </many-to-one>
+        <property name="apellido" type="string">
+            <column name="apellido" length="20" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="20" not-null="true" />
+        </property>
+        <property name="fecingreso" type="date">
+            <column name="fecingreso" length="10" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="30" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="20" />
+        </property>
+        <property name="iddepartamento" type="java.lang.Integer">
+            <column name="iddepartamento" />
+        </property>
+        <property name="sueldo" type="int">
+            <column name="sueldo" not-null="true" />
+        </property>
+        <property name="comision" type="java.lang.Integer">
+            <column name="comision" />
+        </property>
+        <property name="jefe" type="string">
+            <column name="jefe" length="5" />
+        </property>
+        <one-to-one name="usuario" class="dam.Usuario"></one-to-one>
+    </class>
+</hibernate-mapping>
