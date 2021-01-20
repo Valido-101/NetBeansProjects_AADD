@@ -591,13 +591,19 @@ public class Empleado extends com.matisse.reflect.MtObject {
     /*
      * You may add your own code here...
      */
+    @Override
+    public void deepRemove() {
+        
+        DatosProfesionales datos = this.getTiene_datos_prof();
+        
+        if(datos!=null)
+        {
+            datos.deepRemove();
+        }
+        
+        super.deepRemove(); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    /**
-     * Default constructor provided as an example.
-     * You may delete this constructor or modify it to suit your needs. If you
-     * modify it, please revise this comment accordingly.
-     * @param db a database
-     */
     public Empleado(com.matisse.MtDatabase db) {
         super(getClass(db));
     }

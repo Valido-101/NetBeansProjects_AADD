@@ -31,46 +31,67 @@ public class MatisseModifBorrar {
         // Comenzamos con la transacción
         db.startTransaction();
         
-        Proyecto p1 = new Proyecto(db);
-        p1.setNom_proy("AI EN 5G");
-        p1.setF_inicio(new GregorianCalendar(2019,11,5));
         EmpleadoPlantilla jefe_proyecto = new EmpleadoPlantilla(db);
         //insert into empleadoplantilla values("12345678X","VALIDO","123456",null,null,null)
         jefe_proyecto.setDni("12345678X");
         jefe_proyecto.setNom_emp("VALIDO");
         jefe_proyecto.setNum_emp("123456");
         
+        db.commit();
+        
+        db.startTransaction();
+        
+        Proyecto p1 = new Proyecto(db);
+        p1.setNom_proy("AI EN 5G");
+        p1.setF_inicio(new GregorianCalendar(2019,11,5));
         p1.setJefe_proyecto(jefe_proyecto);
         
         Empleado e1 = (Empleado)Empleado.lookupEmpleado_pk(db, "89012345E");
-        e1.setNom_emp("VERDES");
         
-        Empleado[] succs = new Empleado[1];
-        
-        succs[0]=e1;
-        
-        p1.setTiene_asignado(succs);
+        if(e1!=null)
+        {
+            e1.setNom_emp("VERDES");
+
+            Empleado[] succs = new Empleado[1];
+
+            succs[0]=e1;
+
+            p1.appendTiene_asignado(succs);
+            
+        }
         
         Empleado e2 = (Empleado)Empleado.lookupEmpleado_pk(db, "76543210S");
         
-        if(e2.getAsignado_a().length!=0)
+        if(e2!=null)
         {
-            e2.removeAsignado_a(e2.getAsignado_a());
-        }
+                if(e2.getAsignado_a().length!=0)
+                {
+                    e2.removeAsignado_a(e2.getAsignado_a());
+                }
 
-        if(e2.getTiene_datos_prof()!=null)
-        {
-            e2.getTiene_datos_prof().deepRemove();
+            /*
+                if(e2.getTiene_datos_prof()!=null)
+                {
+                    e2.getTiene_datos_prof().deepRemove();
+
+                }
+            */
+            
+            e2.deepRemove();
+
         }
-        
-        e2.deepRemove();
         
         Empleado e3 = (Empleado)Empleado.lookupEmpleado_pk(db, "56789012B");
         
-        e3.clearAsignado_a();
-        e3.clearTiene_datos_prof();
+        if(e3!=null)
+        {
+            e3.clearAsignado_a();
+            e3.clearTiene_datos_prof();
+        }
         
         db.commit();
+        
+        db.startTransaction();
         
         Iterator proyectos = Proyecto.ownInstanceIterator(db);
         
@@ -79,6 +100,8 @@ public class MatisseModifBorrar {
             Proyecto p = (Proyecto)proyectos.next();
             
             muestraProyecto(p);
+            
+            System.out.println("\n");
         }
         
         db.commit();
@@ -88,13 +111,13 @@ public class MatisseModifBorrar {
                 {
                     e.printStackTrace();
                 }
-//        finally
-//        {
-//            if(db!=null)
-//            {
-//                db.close();
-//            }
-//        }
+        finally
+        {
+            if(db!=null)
+            {
+                db.close();
+            }
+        }
         }
         
     
