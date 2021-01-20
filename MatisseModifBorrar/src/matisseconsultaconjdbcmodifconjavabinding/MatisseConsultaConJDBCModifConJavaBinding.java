@@ -50,13 +50,20 @@ public static void main(String[] args) {
             
             if(p.getJefe_proyecto().getNom_emp()=="NADALES")
             {
-                p.appendTiene_asignado(e);
+                try
+                {
+                    p.appendTiene_asignado(e);
                 
-                Proyecto[] proyecto = new Proyecto[1];
-                
-                proyecto[0]=p;
-                
-                e.setAsignado_a(proyecto);
+                    Proyecto[] proyecto = new Proyecto[1];
+
+                    proyecto[0]=p;
+
+                    e.setAsignado_a(proyecto);
+                }
+                catch(MtException exception)
+                {
+                    System.out.println("LUQUE ya ha sido asignado a este proyecto");
+                }
             }
         }
         rs.close();
