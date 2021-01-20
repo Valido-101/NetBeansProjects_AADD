@@ -56,8 +56,7 @@ public class MatisseModifBorrar {
 
             succs[0]=e1;
 
-            p1.appendTiene_asignado(succs);
-            
+            p1.appendTiene_asignado(succs);            
         }
         
         Empleado e2 = (Empleado)Empleado.lookupEmpleado_pk(db, "76543210S");
@@ -70,6 +69,8 @@ public class MatisseModifBorrar {
                 }
 
             /*
+                Condición necesaria antes de haber realizado el ejercicio 3
+                
                 if(e2.getTiene_datos_prof()!=null)
                 {
                     e2.getTiene_datos_prof().deepRemove();

@@ -48,17 +48,11 @@ public static void main(String[] args) {
             System.out.println("Nombre del proyecto: "+p.getNom_proy());
             System.out.println("Jefe del proyecto: "+p.getJefe_proyecto().getNom_emp()+", DNI: "+p.getJefe_proyecto().getDni());
             
-            if(p.getJefe_proyecto().getNom_emp()=="NADALES")
+            if(p.getJefe_proyecto().getNom_emp().equals("NADALES"))
             {
                 try
                 {
                     p.appendTiene_asignado(e);
-                
-                    Proyecto[] proyecto = new Proyecto[1];
-
-                    proyecto[0]=p;
-
-                    e.setAsignado_a(proyecto);
                 }
                 catch(MtException exception)
                 {
