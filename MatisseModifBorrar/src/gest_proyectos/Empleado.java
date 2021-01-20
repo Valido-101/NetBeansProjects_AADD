@@ -603,6 +603,23 @@ public class Empleado extends com.matisse.reflect.MtObject {
         
         super.deepRemove(); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public float subeSueldoBruto(float incr)
+    {
+        DatosProfesionales datos = this.getTiene_datos_prof();
+        
+        if(datos.isSueldo_bruto_anualDefaultValue()!=true)
+        {
+            float sueldo = datos.getSueldo_bruto_anual();
+            sueldo += sueldo*(incr/100);
+            datos.setSueldo_bruto_anual(sueldo);
+            return sueldo;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 
     public Empleado(com.matisse.MtDatabase db) {
         super(getClass(db));
