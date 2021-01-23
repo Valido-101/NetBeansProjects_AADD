@@ -27,19 +27,24 @@ public class ModifSueldoBruto {
         
         try
         {
+            //Buscamos un empleado con un dni elegido al azar
             Empleado e2 = Empleado.lookupEmpleado_pk(db, "56789012B");
             
+            //Si existe, operamos sobre él llamando al método subeSueldoBruto()
             if(e2!=null)
             {
+                //Si tiene datos profesionales, se llama al método
                 if(e2.getTiene_datos_prof()!=null)
                 {
                     System.out.println(e2.subeSueldoBruto(25));
                 }
+                //Si no tiene datos profesionales, se informa al usuario
                 else
                 {
                     System.out.println("Este empleado no tiene datos profesionales.");
                 }
             }
+            //Si no se encuentra dicho empleado, se informa al usuario
             else
             {
                 System.out.println("No se ha encontrado el empleado");

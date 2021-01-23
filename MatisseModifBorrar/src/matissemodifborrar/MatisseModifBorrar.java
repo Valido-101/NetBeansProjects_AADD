@@ -31,61 +31,111 @@ public class MatisseModifBorrar {
         // Comenzamos con la transacción
         db.startTransaction();
         
-        EmpleadoPlantilla jefe_proyecto = new EmpleadoPlantilla(db);
-        //insert into empleadoplantilla values("12345678X","VALIDO","123456",null,null,null)
-        jefe_proyecto.setDni("12345678X");
-        jefe_proyecto.setNom_emp("VALIDO");
-        jefe_proyecto.setNum_emp("123456");
+        //Buscamos un empleado que tenga el dni que le vamos a asignar al nuevo empleado
+        EmpleadoPlantilla jefe_proyecto = EmpleadoPlantilla.lookupEmpleadoPlantilla_i_dni(db, "12345678X");
         
-        db.commit();
-        
-        db.startTransaction();
-        
-        Proyecto p1 = new Proyecto(db);
-        p1.setNom_proy("AI EN 5G");
-        p1.setF_inicio(new GregorianCalendar(2019,11,5));
-        p1.setJefe_proyecto(jefe_proyecto);
-        
-        Empleado e1 = (Empleado)Empleado.lookupEmpleado_pk(db, "89012345E");
-        
-        if(e1!=null)
+        //Si no encuentra ninguno es por que no existe, por lo que lo creamos
+        if(jefe_proyecto==null)
         {
-            e1.setNom_emp("VERDES");
-
-            Empleado[] succs = new Empleado[1];
-
-            succs[0]=e1;
-
-            p1.appendTiene_asignado(succs);            
+            //Creamos un nuevo EmpleadoPlantilla
+            jefe_proyecto = new EmpleadoPlantilla(db);
+            //Asignamos los datos del EmpladoPlantilla
+            jefe_proyecto.setDni("12345678X");
+            jefe_proyecto.setNom_emp("VALIDO");
+            jefe_proyecto.setNum_emp("123456");            
         }
         
+        //Hacemos el primer commit
+        db.commit();
+        
+        //Comenzamos la nueva transacción
+        db.startTransaction();
+        
+        //Obtenemos todos los proyectos de la base de datos
+        Iterator proyectos = Proyecto.ownInstanceIterator(db);
+        
+        Proyecto p1 = null;
+        
+        //Los recorremos
+        while(proyectos.hasNext())
+        {
+            p1 = (Proyecto) proyectos.next();
+            
+            //Si ya hay alguno con este nombre, lo guardamos y salimos del bucle
+            if(p1.getNom_proy().equals("AI EN 5G"))
+            {
+                break;
+            }
+            //Mientras no coincida, asignaremos a p1 el valor de null
+            else
+            {
+                p1 = null;
+            }
+        }
+        
+        //Si p1 es null, el proyecto no existe, por lo que lo creamos. De lo contrario nos quedamos con el que ha encontrado el bucle
+        if(p1==null)
+        {
+            p1 = new Proyecto(db);
+            p1.setNom_proy("AI EN 5G");
+            p1.setF_inicio(new GregorianCalendar(2019,11,5));
+        }
+        
+        //Si el proyecto no tiene ya asignado como jefe de proyecto al empleado que teníamos, se asigna
+        if(p1.getJefe_proyecto()!=jefe_proyecto)
+        {
+            //Asignamos un jefe de proyecto al proyecto que acabamos de crear
+            p1.setJefe_proyecto(jefe_proyecto);
+        }
+        
+        //Buscamos al empleado con dni
+        Empleado e1 = (Empleado)Empleado.lookupEmpleado_pk(db, "89012345E");
+        
+        //Si no lo encuentra es porque no existe, así que lo creamos
+        if(e1!=null)
+        {
+            //Le cambiamos el nombre
+            e1.setNom_emp("VERDES");
+            
+            //Asignamos este empleado al proyecto
+            p1.appendTiene_asignado(e1);            
+        }
+        
+        //Seguimos el mismo proceso con el empleado 2
         Empleado e2 = (Empleado)Empleado.lookupEmpleado_pk(db, "76543210S");
         
+        //Si lo encuentra, hacemos las operaciones
         if(e2!=null)
         {
-                if(e2.getAsignado_a().length!=0)
-                {
-                    e2.removeAsignado_a(e2.getAsignado_a());
-                }
+            
+            //Obtenemos la lista de empleados asignados al proyecto
+            if(e2.getAsignado_a().length!=0)
+            {
+                //Borramos los sucesores de la relación
+                e2.removeAsignado_a(e2.getAsignado_a());
+            }
 
             /*
-                Condición necesaria antes de haber realizado el ejercicio 3
-                
-                if(e2.getTiene_datos_prof()!=null)
-                {
-                    e2.getTiene_datos_prof().deepRemove();
+            Condición necesaria antes de haber realizado el ejercicio 3
 
-                }
+            if(e2.getTiene_datos_prof()!=null)
+            {
+                e2.getTiene_datos_prof().deepRemove();
+
+            }
             */
             
             e2.deepRemove();
 
         }
         
+        //Obtenemos al tercer empleado
         Empleado e3 = (Empleado)Empleado.lookupEmpleado_pk(db, "56789012B");
         
+        //Si no es null, operamos sobre él
         if(e3!=null)
         {
+            //Borramos las relaciones
             e3.clearAsignado_a();
             e3.clearTiene_datos_prof();
         }
@@ -94,12 +144,15 @@ public class MatisseModifBorrar {
         
         db.startTransaction();
         
-        Iterator proyectos = Proyecto.ownInstanceIterator(db);
+        //Obtenemos un iterador de todos los proyectos de la base de datos
+        Iterator proyectos1 = Proyecto.ownInstanceIterator(db);
         
-        while(proyectos.hasNext())
+        //Lo recorremos
+        while(proyectos1.hasNext())
         {
             Proyecto p = (Proyecto)proyectos.next();
             
+            //Ejecutamos el método muestraProyecto sobre cada proyecto
             muestraProyecto(p);
             
             System.out.println("\n");

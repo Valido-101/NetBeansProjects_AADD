@@ -31,9 +31,17 @@ public static void main(String[] args) {
         
         db.startTransaction();
         
-        Empleado e = new Empleado(db);
-        e.setDni("65432109F");
-        e.setNom_emp("LUQUE");
+        //Buscamos un empleado con ese dni
+        Empleado e = Empleado.lookupEmpleado_pk(db, "65432109F");
+        
+        //Si no existe, lo creamos. Si existe, nos quedamos con el encontrado.
+        if(e==null)
+        {
+            e = new Empleado(db);
+            
+            e.setDni("65432109F");
+            e.setNom_emp("LUQUE");
+        }
         
         Connection jdbcCon = db.getJDBCConnection();
         Statement st = jdbcCon.createStatement();
@@ -45,9 +53,13 @@ public static void main(String[] args) {
             p = (Proyecto) rs.getObject(1);
             // Imprime nombre del proyecto y jefe + DNI
             // Si el jefe del proyecto es NADALES, añade como empleado a LUQUE
+            
+            //Sacamos por pantalla el nombre del proyecto
             System.out.println("Nombre del proyecto: "+p.getNom_proy());
+            //Sacamos por pantalla el nombre y dni del jefe de ese proyecto
             System.out.println("Jefe del proyecto: "+p.getJefe_proyecto().getNom_emp()+", DNI: "+p.getJefe_proyecto().getDni());
             
+            //Si el proyecto tiene como jefe a Nadales, asignamos como empleado a Luque
             if(p.getJefe_proyecto().getNom_emp().equals("NADALES"))
             {
                 try
