@@ -124,8 +124,15 @@ public class Ejercicio1 {
             
             //Encontramos el patrón
             if(matcher.find())
-            {
-                System.out.println("Se han encontrado patrones");
+            {                
+                //Creamos el archivo en el que vamos a copiar los datos
+                Resource copia_archivo_xml = col_copia_seguridad.createResource("Copia_"+matcher.group(1)+"_"+fecha_hoy+".xml", XMLResource.RESOURCE_TYPE);
+
+                //Copiamos el contenido de "archivo_xml" a la copia de seguridad
+                copia_archivo_xml.setContent(archivo_xml.getContent());
+
+                //Guardamos el archivo copiado en la colección de copias de seguridad
+                col_copia_seguridad.storeResource(copia_archivo_xml);
             }
             else
             {
@@ -134,14 +141,7 @@ public class Ejercicio1 {
             
             System.out.println(matcher.group(1));
             
-            //Creamos el archivo en el que vamos a copiar los datos
-            Resource copia_archivo_xml = col_copia_seguridad.createResource("Copia_"+matcher.group(1)+"_"+fecha_hoy+".xml", XMLResource.RESOURCE_TYPE);
             
-            //Copiamos el contenido de "archivo_xml" a la copia de seguridad
-            copia_archivo_xml.setContent(archivo_xml.getContent());
-            
-            //Guardamos el archivo copiado en la colección de copias de seguridad
-            col_copia_seguridad.storeResource(copia_archivo_xml);
         }
     }
     
