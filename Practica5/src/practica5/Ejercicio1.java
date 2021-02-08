@@ -32,13 +32,7 @@ public class Ejercicio1 {
      
         try {
             crearCopiaSeguridad("pruebas");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Ejercicio1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Ejercicio1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (XMLDBException ex) {
-            Logger.getLogger(Ejercicio1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (ClassNotFoundException | InstantiationException | XMLDBException | IllegalAccessException ex) {
             Logger.getLogger(Ejercicio1.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -117,8 +111,6 @@ public class Ejercicio1 {
             //Obtenemos el archivo xml
             Resource archivo_xml = col_pruebas.getResource(resource);
             
-            System.out.println(resource);
-            
             //Creamos el matcher que nos permitirá encontrar y extraer dicho trozo del texto
             Matcher matcher = patron.matcher(resource);
             
@@ -138,9 +130,6 @@ public class Ejercicio1 {
             {
                 System.out.println("No se han encontrado patrones");
             }
-            
-            System.out.println(matcher.group(1));
-            
             
         }
     }
