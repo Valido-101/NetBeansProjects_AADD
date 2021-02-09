@@ -100,6 +100,9 @@ public class Ejercicio1 {
         //Obtenemos la colección "copia_seguridad"
         Collection col_copia_seguridad = col_parent.getChildCollection("copia_seguridad");
         
+        //------------------------------------------------------------------
+        
+        //Creamos la expresión regular
         String regex = "^(.+)\\.xml";
         
         //Creamos el patrón para recuperar el trozo de texto deseado
