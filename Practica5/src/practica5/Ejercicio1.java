@@ -82,14 +82,17 @@ public class Ejercicio1 {
         
         boolean exists = false;
         
+        //Recorremos el listado de colleciones que nos ha devuelto listChildCollections() para comprobar si existe
         for(String s: existing_cols)
         {
+            //Si algún elemento tiene el nombre de copia de seguridad, exists pasa a ser true
             if(s.equals("copia_seguridad"))
             {
                 exists = true;
             }
         }
         
+        //Si no existe creamos la colección
         if(exists==false)
         {
             //Creamos la colección "copia_seguridad" en db

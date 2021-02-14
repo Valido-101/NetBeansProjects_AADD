@@ -1,0 +1,8 @@
+-----------------------------------------
+MODIFICACIÓN CLIENTE DNI = 78901234X FECHA = 2021-2-14
+CP anterior: 44126
+CP nuevo: 41018
+-----------------------------------------
+MODIFICACIÓN CLIENTE DNI = 89012345E FECHA = 2021-2-14
+CP anterior: 45612
+CP nuevo: 41018

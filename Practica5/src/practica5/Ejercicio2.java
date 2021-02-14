@@ -63,14 +63,23 @@ public class Ejercicio2 {
             }
            */
         
+//        System.out.println("Introduzca un dni:");
+//        String dni = teclado.nextLine();
+//        try {
+//            numeroCompras(obtenConexion(),dni);
+//        } catch (XQException ex) {
+//            Logger.getLogger(Ejercicio2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+            
         System.out.println("Introduzca un dni:");
         String dni = teclado.nextLine();
+        System.out.println("Introduzca un nuevo código postal:");
+        int nuevo_cp = teclado.nextInt();
         try {
-            numeroCompras(obtenConexion(),dni);
-        } catch (XQException ex) {
+            modificarCP(obtenConexion(),dni,nuevo_cp);
+        } catch (XQException | IOException ex) {
             Logger.getLogger(Ejercicio2.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
         
         teclado.close();
     }
@@ -133,14 +142,14 @@ public class Ejercicio2 {
             XQExpression expression = conn.createExpression();
             
             //Recuperamos el anterior cp
-            XQResultSequence resultado = expression.executeQuery("doc('/db/pruebas/clientes.xml')/clientes/cliente[@DNI='"+dni+"']/CP");
+            XQResultSequence resultado = expression.executeQuery("data(doc('/db/pruebas/clientes.xml')/clientes/cliente[@DNI='"+dni+"']/CP)");
             
             resultado.next();
             
-            int cp_anterior = resultado.getInt();
+            String cp_anterior = resultado.getItem().getAtomicValue();
             
             //Ejecutamos la modificación
-            expression.executeCommand("update value doc('/db/pruebas/clientes.xml')/clientes/cliente[@DNI='"+dni+"']/CP with "+nuevo_cp);
+            expression.executeCommand("update value doc('/db/pruebas/clientes.xml')/clientes/cliente[@DNI='"+dni+"']/CP with '"+nuevo_cp+"'");
             
             //Creamos el objeto file que contendrá el paquete donde almacenaremos el registro
             File paquete_destino = new File("src/archivo_seguridad");
@@ -150,7 +159,7 @@ public class Ejercicio2 {
             //En el caso de que no exista
             if(!paquete_destino.exists())
             {
-                paquete_destino.createNewFile();
+                paquete_destino.mkdir();
             }
             
             File registro_mod = new File(paquete_destino,"registro_cambios.txt");
@@ -160,9 +169,20 @@ public class Ejercicio2 {
                 registro_mod.createNewFile();
             }
             
-            //Creamos el bufferedwriter para escribir, en el 
+            //Creamos el bufferedwriter para escribir, en la ruta especificada antes
             BufferedWriter escritor = new BufferedWriter(new FileWriter(registro_mod,true));
             
+            //Escribimos en el fichero
+            escritor.write("-----------------------------------------");
+            escritor.newLine();
+            escritor.write("MODIFICACIÓN CLIENTE DNI = "+dni+" FECHA = "+fecha_hoy);
+            escritor.newLine();
+            escritor.write("CP anterior: "+cp_anterior);
+            escritor.newLine();
+            escritor.write("CP nuevo: "+nuevo_cp);
+            escritor.newLine();
+            
+            escritor.close();
             expression.close();
         }
         //Si no existe, se informa al usuario
@@ -189,6 +209,7 @@ public class Ejercicio2 {
             
             int n_compras = resultado.getInt();
             
+            //Informamos al usuario
             System.out.println("El usuario con DNI = "+dni+" ha realizado "+n_compras+" compra/s.");
             
             expression.close();
@@ -204,20 +225,25 @@ public class Ejercicio2 {
     
     public static boolean clienteExiste(String dni, XQConnection conn) throws XQException
     {        
+        //Creamos la expresión
         XQExpression expression = conn.createExpression();
         
+        //Ejecutamos una consulta que cuente los clientes que hay con ese dni (sólo uno si existe)
         XQResultSequence resultado = expression.executeQuery("count(doc('/db/pruebas/clientes.xml')/clientes/cliente[@DNI='"+dni+"'])");
         
         resultado.next();
         
+        //Recuperamos el recuento
         int recuento = resultado.getInt();
         
         expression.close();
         
+        //Si es igual a cero devolvemos false (no existe)
         if(recuento==0)
         {
             return false;
         }
+        //De lo contrario devolvemos true (existe)
         else
         {
             return true;

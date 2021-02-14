@@ -113,19 +113,71 @@ public class Repaso_Expresiones_Regulares {
         //Con el signo ? (Puede aparecer o no aparecer)
         String regex6 = "\\w?";
         
+        System.out.println("\nPrueba de repetición de patrones con ?: \n");
+        
+        String c8 = "a";
+        String c9 = "";
+        String c10 = "*";
+        String c11 = "aa";
+        
+        //Esto devolverá true porque en todas las cadenas se da el caso de que aparece o no un carácter alfanumérico.
+        System.out.println(Pattern.matches(regex6,c8));
+        System.out.println(Pattern.matches(regex6,c9));
+        
+        //Esto devolverá false porque el carácter aparece más de una vez, incumpliendo con la condición.
+        //Además tampoco acepta el asterisco (carácter especial) por el mismo motivo que el \\d*
+        System.out.println(Pattern.matches(regex6,c10));
+        System.out.println(Pattern.matches(regex6,c11));
+        
         //Estableciéndole un rango personalizado entre llaves {}
         String regex7 = "\\d{5}";
         String regex8 = "\\d{3,5}";
         String regex9 = "\\d{3,}";
-        String regex10 = "\\d{,5}";
+        String regex10 = "\\d{0,5}";
         
-        /*
-        //Creamos el patrón para recuperar el trozo de texto deseado
-        Pattern patron = Pattern.compile(regex1);
+        System.out.println("\nPrueba de repetición de patrones con rangos personalizados: \n");
         
-        //Creamos el matcher que nos permitirá encontrar y extraer dicho trozo del texto
-        Matcher matcher = patron.matcher(cadena);
-        */
+        String c12 = "12345";
+        String c13 = "123";
+        String c14 = "123456789";
+        String c15 = "1";
+        
+        //Devuelve true porque es una secuencia de 5 dígitos
+        System.out.println(Pattern.matches(regex7,c12)+"\n");
+        //Devuelve true porque acepta cualquier rango de dígitos que vaya de 3 a 5
+        System.out.println(Pattern.matches(regex8,c12));
+        System.out.println(Pattern.matches(regex8,c13)+"\n");
+        //Esto acepta un rango de 3 hasta infinito, así que devolverá true siempre que haya más de 3 dígitos
+        System.out.println(Pattern.matches(regex9,c13));
+        System.out.println(Pattern.matches(regex9,c12));
+        System.out.println(Pattern.matches(regex9,c14));
+        System.out.println(Pattern.matches(regex9,c15)+"\n");
+        //Esto acepta un rango desde 0 a 5. Si se pasa de 5 devuelve false
+        System.out.println(Pattern.matches(regex10,c15));
+        System.out.println(Pattern.matches(regex10,c13));
+        System.out.println(Pattern.matches(regex10,c12));
+        System.out.println(Pattern.matches(regex10,c14)+"\n");
+        
+        //--------------------------------------------------------------
+        
+        //¿Se pueden combinar estas expresiones?
+        
+        //Sí se pueden. Todas ellas se pueden combinar para aumentar la complejidad del patrón que queremos encontrar.
+        
+        //En este ejemplo podemos validar que una matrícula de coche tiene el formato correcto:
+        
+        String regex11 = "\\d{4}[A-Z]{3}";
+        
+        String matricula_correcta = "1234AAA";
+        String matricula_incorrecta = "1AAAA";
+        String matricula_incorrecta1 = "1234AA";
+        
+        System.out.println("\nPrueba de validación de matrícula:\n");
+        
+        System.out.println(Pattern.matches(regex11,matricula_correcta));
+        System.out.println(Pattern.matches(regex11,matricula_incorrecta));
+        System.out.println(Pattern.matches(regex11,matricula_incorrecta1));
+        
         
     }
     
