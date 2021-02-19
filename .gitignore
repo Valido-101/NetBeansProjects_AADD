@@ -1,3 +1,11 @@
+#Archivos comprimidos
+*.rar
+*.zip
+#Archivos de texto
+*.txt
+#Archivos sql
+*.sql
+
 /Practica_3/nbproject/private/
 /Practica3-JESÚS_VALIDO_ZAFRA/nbproject/private/
 /Practica3-JESÚS_VALIDO_ZAFRA/build/

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+
+Name: MisBeans/Pedido.Class
+Java-Bean: True
+
+Name: MisBeans/Producto.class
+Java-Bean: True
+
+Name: MisBeans/Venta.class
+Java-Bean: False
+
+Name: MisBeans/BaseDatos.class
+Java-Bean: False

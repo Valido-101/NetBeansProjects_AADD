@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package MisBeans;
 
 import java.beans.*;
@@ -14,15 +13,15 @@ import java.io.Serializable;
  * @author Usuario
  */
 public class Producto implements Serializable {
-    
+
     private PropertyChangeSupport propertySupport;
-    
+
     private String descripcion;
     private int idProducto;
     private int stockActual;
     private int stockMinimo;
     private float pvp;
-    
+
     public Producto() {
         propertySupport = new PropertyChangeSupport(this);
     }
@@ -35,11 +34,11 @@ public class Producto implements Serializable {
         this.pvp = pvp;
         propertySupport = new PropertyChangeSupport(this);
     }
-    
+
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(listener);
     }
-    
+
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.removePropertyChangeListener(listener);
     }
@@ -65,19 +64,17 @@ public class Producto implements Serializable {
     }
 
     public void setStockActual(int valorNuevo) {
-        
-        
+
         int valorAnterior = stockActual;
         stockActual = valorNuevo;
-        
-        if(stockActual < getStockMinimo()){
-        
-            propertySupport.firePropertyChange("stockActual", valorAnterior,stockActual);
+
+        if (stockActual < getStockMinimo()) {
+
+            propertySupport.firePropertyChange("stockActual", valorAnterior, stockActual);
 
         }
-        
+
     }
-            
 
     public int getStockMinimo() {
         return stockMinimo;
@@ -94,6 +91,5 @@ public class Producto implements Serializable {
     public void setPvp(float pvp) {
         this.pvp = pvp;
     }
-    
-    
+
 }

@@ -16,8 +16,6 @@ import java.sql.Date;
  */
 public class Pedido implements Serializable, PropertyChangeListener {
     
-    private PropertyChangeSupport propertySupport;
-    
     private int numeroPedido;
     private int idProducto;
     private Date fecha;
@@ -25,7 +23,6 @@ public class Pedido implements Serializable, PropertyChangeListener {
     private boolean pedir;
     
     public Pedido() {
-        propertySupport = new PropertyChangeSupport(this);
     }
 
     public Pedido(int numeroPedido, int idProducto, Date fecha, int cantidad) {
@@ -34,17 +31,6 @@ public class Pedido implements Serializable, PropertyChangeListener {
         this.fecha = fecha;
         this.cantidad = cantidad;
         pedir = false;
-        propertySupport = new PropertyChangeSupport(this);
-    }
-    
-    
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.addPropertyChangeListener(listener);
-    }
-    
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.removePropertyChangeListener(listener);
     }
 
     @Override
