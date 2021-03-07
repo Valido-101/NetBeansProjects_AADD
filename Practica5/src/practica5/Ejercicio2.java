@@ -19,12 +19,9 @@ import javax.xml.xquery.XQConnection;
 import javax.xml.xquery.XQDataSource;
 import javax.xml.xquery.XQException;
 import javax.xml.xquery.XQExpression;
-import javax.xml.xquery.XQItem;
-import javax.xml.xquery.XQResultItem;
 import javax.xml.xquery.XQResultSequence;
 import javax.xml.xquery.XQSequence;
 import net.xqj.exist.ExistXQDataSource;
-import org.w3c.dom.Node;
 
 /**
  *

@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 
-Name: MisBeans/Pedido.Class
+Name: javaBeans/Pedido.class
 Java-Bean: True
 
-Name: MisBeans/Producto.class
+Name: javaBeans/Producto.class
 Java-Bean: True
 
-Name: MisBeans/Venta.class
+Name: javaBeans/Ventas.class
 Java-Bean: False
 
-Name: MisBeans/BaseDatos.class
+Name: javaBeans/BaseDatos.class
 Java-Bean: False

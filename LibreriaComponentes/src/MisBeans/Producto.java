@@ -7,12 +7,15 @@ package MisBeans;
 
 import java.beans.*;
 import java.io.Serializable;
+import javax.xml.bind.PropertyException;
 
 /**
  *
- * @author Usuario
+ * @author Francisco
  */
 public class Producto implements Serializable {
+
+    public static final String PROP_SAMPLE_PROPERTY = "sampleProperty";
 
     private PropertyChangeSupport propertySupport;
 
@@ -24,23 +27,18 @@ public class Producto implements Serializable {
 
     public Producto() {
         propertySupport = new PropertyChangeSupport(this);
+
     }
 
     public Producto(String descripcion, int idProducto, int stockActual, int stockMinimo, float pvp) {
+
+        propertySupport = new PropertyChangeSupport(this);
         this.descripcion = descripcion;
         this.idProducto = idProducto;
         this.stockActual = stockActual;
         this.stockMinimo = stockMinimo;
         this.pvp = pvp;
-        propertySupport = new PropertyChangeSupport(this);
-    }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.removePropertyChangeListener(listener);
     }
 
     public String getDescripcion() {
@@ -67,10 +65,9 @@ public class Producto implements Serializable {
 
         int valorAnterior = stockActual;
         stockActual = valorNuevo;
-
         if (stockActual < getStockMinimo()) {
-
-            propertySupport.firePropertyChange("stockActual", valorAnterior, stockActual);
+            propertySupport.firePropertyChange("stockActual", valorAnterior,
+                    stockActual);
 
         }
 
@@ -90,6 +87,22 @@ public class Producto implements Serializable {
 
     public void setPvp(float pvp) {
         this.pvp = pvp;
+    }
+
+    public PropertyChangeSupport getPropertySupport() {
+        return propertySupport;
+    }
+
+    public void setPropertySupport(PropertyChangeSupport propertySupport) {
+        this.propertySupport = propertySupport;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertySupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertySupport.removePropertyChangeListener(listener);
     }
 
 }

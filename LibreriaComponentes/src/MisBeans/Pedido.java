@@ -12,7 +12,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Usuario
+ * @author Francisco
  */
 public class Pedido implements Serializable, PropertyChangeListener {
     
@@ -22,23 +22,19 @@ public class Pedido implements Serializable, PropertyChangeListener {
     private int cantidad;
     private boolean pedir;
     
+    
+   
+    
     public Pedido() {
+        
     }
-
-    public Pedido(int numeroPedido, int idProducto, Date fecha, int cantidad) {
-        this.numeroPedido = numeroPedido;
-        this.idProducto = idProducto;
-        this.fecha = fecha;
-        this.cantidad = cantidad;
-        pedir = false;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
-        System.out.println("Stock anterior: " + evt.getOldValue());
-        System.out.println("Stock actual: " + evt.getNewValue());
-        setPedir(true);
+     public Pedido(int numeroPedido,int idProducto,Date fecha,int cantidad) {
+         
+        this.numeroPedido=numeroPedido;
+        this.idProducto=idProducto;
+        this.fecha=fecha;
+        this.cantidad=cantidad;
+        pedir= false;
     }
 
     public int getNumeroPedido() {
@@ -81,5 +77,15 @@ public class Pedido implements Serializable, PropertyChangeListener {
         this.pedir = pedir;
     }
     
+    
+    
+    
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Stock anterior "+ evt.getOldValue());
+        System.out.println("Stock actual "+ evt.getNewValue());
+        setPedir(true);
+    }
     
 }
